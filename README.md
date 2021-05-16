@@ -46,7 +46,7 @@
 #### 目前支持矩阵加减乘，乘包括点乘
 
 ```c++
-    Matrix<int>c = m * m2;
+        Matrix<int>c = m * m2;
 	m2 = m - c;
 	m2 = m + c;
 ```
