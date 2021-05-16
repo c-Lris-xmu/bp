@@ -1,7 +1,7 @@
 //BP Neural Network
 #include<iostream>
 #include<fstream>
-#include"Matrix.hpp"
+#include"headers/Matrix.hpp"
 using namespace std;
 
 int main()
