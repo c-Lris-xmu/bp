@@ -14,14 +14,18 @@ int main()
 	vector< vector<int> >v1(3, vector<int>(4, 0));
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 4; j++)
-			v1[i][j] = i * j;
+			v1[i][j] = i * j+j;
 	
-	Matrix<int> m(3, 4);
-	m.setMatrix(v1);
-	Matrix<int> m2(4, 3);
-	m2.setMatrix(v);
-	Matrix<int>c=m*m2;
+	Matrix<int> m(v1);
+	Matrix<int> m2(v);
+	Matrix<int>c = m * m2;
 	c.display();
-			
+	m=!c;
+	c.display();
+	m2 = m - c;
+	m2.display();
+	m2 = m + c;
+	m2.display();
+
 	return 0;
 }

@@ -33,3 +33,29 @@
 
 其中，lr为学习率
 
+## 二、Matrix接口
+
+#### 初始化支持三种形式，接下来视情况扩展int** 
+
+```c++
+	Matrix(int, int);                                                    
+	Matrix(const Matrix<T>&);                                            
+	Matrix(vector< vector<T> >&);                                        
+```
+
+#### 目前支持矩阵加减乘，乘包括点乘
+
+```c++
+    Matrix<int>c = m * m2;
+	m2 = m - c;
+	m2 = m + c;
+```
+
+#### 重载 operator ！实现自身转置以及赋值给其他类
+
+```c++
+	m=!c;
+```
+
+#### display()函数打印矩阵
+
