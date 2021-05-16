@@ -1,9 +1,27 @@
 //BP Neural Network
 #include<iostream>
+#include<fstream>
+#include"Matrix.hpp"
 using namespace std;
 
 int main()
 {
-	cout << "haha zyf" << endl;
+	vector< vector<int> >v(4,vector<int>(3,0));
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < 3; j++)
+			v[i][j] = i * j;
+
+	vector< vector<int> >v1(3, vector<int>(4, 0));
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 4; j++)
+			v1[i][j] = i * j;
+	
+	Matrix<int> m(3, 4);
+	m.setMatrix(v1);
+	Matrix<int> m2(4, 3);
+	m2.setMatrix(v);
+	Matrix<int>c=m*m2;
+	c.display();
+			
 	return 0;
 }
