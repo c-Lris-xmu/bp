@@ -22,7 +22,7 @@ public:
 	friend bool judge(const Matrix<T1>&, const Matrix<T1>&);             //ÅĞ¶ÏÊÇ·ñÂú×ãÏà³Ë
  
 
-	Matrix<T>& operator!();                                              //¾ØÕó×ªÖÃ
+	Matrix<T> operator!();                                              //¾ØÕó×ªÖÃ
 	void display();
 
 private:
@@ -65,18 +65,14 @@ bool judge(const Matrix<T1>& a, const Matrix<T1>& b)
 }
 
 template<class T>
-Matrix<T>& Matrix<T>::operator !()
+Matrix<T> Matrix<T>::operator !()
 {
 	Matrix<T> temp(Col,Row);
 	for (int i = 0; i < Row; i++)
 		for (int j = 0; j < Col; j++)
 			temp.matrix[j][i] = matrix[i][j];
-	this->Row = temp.Row, this->Col = temp.Col;
-	this->matrix.assign(Row, vector<T>(Col, 0));
-	for (int i = 0; i < Row; i++)
-		for (int j = 0; j < Col; j++)
-			this->matrix[i][j] = temp.matrix[i][j];
-	return *this;
+
+	return temp;
 }
 
 template<class T1>

@@ -19,9 +19,13 @@ int main()
 	Matrix<int> m(v1);
 	Matrix<int> m2(v);
 	Matrix<int>c = m * m2;
+	cout << "¾ØÕóÏà³Ë" << endl;
 	c.display();
+	cout << "¾ØÕó×ªÖÃ" << endl;
 	m=!c;
+	m.display();
 	c.display();
+	cout << "¾ØÕó¼Ó¼õ" << endl;
 	m2 = m - c;
 	m2.display();
 	m2 = m + c;
