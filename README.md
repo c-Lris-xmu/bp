@@ -19,7 +19,7 @@
 #### Step2.敏感度回传
 ![](https://latex.codecogs.com/gif.image?\dpi{110}&space;s^M=-2\dot{F}^M\left(&space;n^M&space;\right)&space;\left(&space;t-a&space;\right))
 
-![](https://latex.codecogs.com/gif.image?\dpi{110}&space;s^m=\dot{F}^m\left(&space;n^m&space;\right)&space;\left(&space;W^{m&plus;1}&space;\right)&space;^Ts^{m-1},m=M-1,...,2,1)
+![](https://latex.codecogs.com/gif.image?\dpi{110}&space;s^m=\dot{F}^m\left(&space;n^m&space;\right)&space;\left(&space;W^{m&plus;1}&space;\right)&space;^Ts^{m+1},m=M-1,...,2,1)
 
 其中,s为回传敏感度，s^M为迭代起点，t为正确结果
 
