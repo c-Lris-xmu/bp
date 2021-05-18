@@ -7,6 +7,10 @@
 
 using namespace std;
 
+int add(int a)
+{
+	return a + 1;
+}
 int main()
 {
 	vector< vector<int> >v(4,vector<int>(3,0));
@@ -47,7 +51,7 @@ int main()
 
 	Matrix<double> mm1(4, 1);
 	Matrix<double> mm2(3, 1);
-	BPnet net;
+	BPnet net(1000,0.01,0.01);
 	net.set_dim(mm1, mm2);
 	net.checkparameter();
 
@@ -55,5 +59,11 @@ int main()
 	Matrix<double> m4;
 	data_loader test;
 	test.read_file("./data/iris.data",m3,m4);
+
+	
+	Matrix<int> m;
+	int (*ptr)(int) = add;
+	m.self_function(ptr);
+
 	return 0;
 }
