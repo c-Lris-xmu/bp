@@ -66,12 +66,24 @@
 #### get_element(int,int) 返回单个元素 超出范围返回矩阵第一个值
 
 ```c++
-    m.get_element(2,2)  //index starts from zero
+    m.get_element(2,2); //index starts from zero
 ```
 
 #### getRowandCol() 返回一个1*2的Matrix 第一个元素为行，第二个元素为列
 
 ```c++
-    m.getRowandCol()
+    m.getRowandCol();
+```
+
+#### self_function(T(*f)(T a)) 传入函数句柄对所有矩阵元素进行操作
+
+```c++
+    int add(int a)
+    {
+       return a+1;
+    }
+    Matrix<int> m;
+    int (*ptr)(int)=add;
+    m.self_function(ptr);
 ```
 
