@@ -29,6 +29,7 @@ public:
 	Matrix<T> operator!();                                               //矩阵转置
 	Matrix<T> operator()(int,int);                                       //拷贝复制
 	Matrix<T> operator()(const Matrix&m);
+	Matrix<T> operator()(vector< vector<T> >&);
 
 	T get_element(int, int);                                             //读取单个元素
 
@@ -106,7 +107,15 @@ Matrix<T> Matrix<T>::operator()(int r, int c)
 	this->matrix.assign(r, vector<T>(c, 0));
 	return *this;
 }
-
+template<class T>
+Matrix<T> Matrix<T>::operator()(vector< vector<T> >&v)
+{
+	this->Row = v.size(), this->Col = v[0].size();
+	this->matrix.assign(Row, vector<T>(Col, 0));
+	for (int i = 0; i < (int)v.size(); i++)
+		matrix[i].assign(v[i].begin(), v[i].end());
+	return *this;
+}
 template<class T1>
 Matrix<T1> operator *(const Matrix<T1>&a, const Matrix<T1>&b) 
 {

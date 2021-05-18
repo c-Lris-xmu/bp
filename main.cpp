@@ -54,6 +54,6 @@ int main()
 	Matrix<double> m3;
 	Matrix<double> m4;
 	data_loader test;
-	//test.read_file("./data/iris.data",m3,m4);
+	test.read_file("./data/iris.data",m3,m4);
 	return 0;
 }

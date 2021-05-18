@@ -8,6 +8,6 @@ public:
 	Matrix<double> xtrain,ytrain;
 	Matrix<double> xtest, ytest;
 	void read_file(string, Matrix<double>&, Matrix<double>&);
-	double label_to_num(const string);
+	vector<double> label_to_num(const string);
 };
 
