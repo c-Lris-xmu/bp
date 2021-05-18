@@ -21,6 +21,9 @@ int main()
 	Matrix<int>c = m * m2;
 	cout << "¾ØÕóÏà³Ë" << endl;
 	c.display();
+	cout << "¾ØÕóÊı³Ë" << endl;
+	c = 5 * c;
+	c.display();
 	cout << "¾ØÕó×ªÖÃ" << endl;
 	m=!c;
 	m.display();

@@ -15,6 +15,10 @@ public:
 	template<class T1>
 	friend Matrix<T1> operator*(const Matrix<T1>&, const Matrix<T1>&);   //矩阵相乘以及矩阵点乘
 	template<class T1>
+	friend Matrix<T1> operator*(const Matrix<T1>&, const T1&);           //矩阵数乘
+	template<class T1>
+	friend Matrix<T1> operator*(const T1&, const Matrix<T1>&);            
+	template<class T1>
 	friend Matrix<T1> operator+(const Matrix<T1>&, const Matrix<T1>&);   //矩阵相加
 	template<class T1>
 	friend Matrix<T1> operator-(const Matrix<T1>&, const Matrix<T1>&);   //矩阵相减
@@ -22,9 +26,15 @@ public:
 	friend bool judge(const Matrix<T1>&, const Matrix<T1>&);             //判断是否满足相乘
  
 	Matrix<T> operator!();                                               //矩阵转置
-	T get_element(int, int);                                             //读取单个元素
-	void display();
 
+	T get_element(int, int);                                             //读取单个元素
+
+	void display();                                                      //打印矩阵
+
+	Matrix<T> self_function(T(*f)(T a));                                 //自定义函数操作矩阵值
+
+	Matrix<T> getRowandCol();                                            //返回行列
+	 
 private:
 	int Row, Col;
 	vector< vector<T> > matrix;
@@ -104,6 +114,26 @@ Matrix<T1> operator *(const Matrix<T1>&a, const Matrix<T1>&b)
 }
 
 template<class T1>
+Matrix<T1> operator*(const T1&a, const Matrix<T1>&b)
+{
+	Matrix<T1> temp(b);
+	for (int i = 0; i < b.Row; i++)
+		for (int j = 0; j < b.Col; j++)
+			temp.matrix[i][j] *= a;
+	return temp;
+}
+
+template<class T1>
+Matrix<T1> operator*(const Matrix<T1>& a, const T1& b)
+{
+	Matrix<T1> temp(a);
+	for (int i = 0; i < a.Row; i++)
+		for (int j = 0; j < a.Col; j++)
+			temp.matrix[i][j] *= b;
+	return temp;
+}
+
+template<class T1>
 Matrix<T1> operator+(const Matrix<T1>&a, const Matrix<T1>&b)
 {
 	if(a.Row!=b.Row||a.Col!=b.Col)
@@ -155,5 +185,20 @@ void Matrix<T>::display()
 }
 
 
+template<class T>
+Matrix<T> Matrix<T>::self_function(T  (*f)(T a))
+{
+	for (int i = 0; i < Row; i++)
+		for (int j = 0; j < Col; j++)
+			matrix[i][j] = f(matrix[i][j]);
+	return *this;
+}
 
-
+template<class T>
+Matrix<T> Matrix<T>::getRowandCol()
+{
+	Matrix<T> temp(1, 2);
+	temp.matrix[0][0] = this->Row;
+	temp.matrix[0][1] = this->Col;
+	return temp;
+}

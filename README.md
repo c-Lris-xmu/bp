@@ -69,3 +69,9 @@
     m.get_element(2,2)  //index starts from zero
 ```
 
+#### getRowandCol() 返回一个1*2的Matrix 第一个元素为行，第二个元素为列
+
+```c++
+    m.getRowandCol()
+```
+
