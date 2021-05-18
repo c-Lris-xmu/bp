@@ -27,6 +27,8 @@ public:
 	friend bool judge(const Matrix<T1>&, const Matrix<T1>&);             //判断是否满足相乘
  
 	Matrix<T> operator!();                                               //矩阵转置
+	Matrix<T> operator()(int,int);                                       //拷贝复制
+	Matrix<T> operator()(const Matrix&m);
 
 	T get_element(int, int);                                             //读取单个元素
 
@@ -84,6 +86,25 @@ Matrix<T> Matrix<T>::operator !()
 			temp.matrix[j][i] = matrix[i][j];
 
 	return temp;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::operator()(const Matrix<T>&m)
+{
+	this->Row = m.Row, this->Col = m.Col;
+	this->matrix.assign(Row, vector<T>(Col, 0));
+	for (int i = 0; i < Row; i++)
+		matrix[i].assign(m.matrix[i].begin(), m.matrix[i].end());
+
+	return *this;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::operator()(int r, int c)
+{
+	this->Row = r, this->Col = c;
+	this->matrix.assign(r, vector<T>(c, 0));
+	return *this;
 }
 
 template<class T1>

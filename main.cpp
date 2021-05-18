@@ -3,6 +3,7 @@
 #include<fstream>
 #include"headers/Matrix.hpp"
 #include"headers/BP_net.h"
+#include"headers/data_loader.h"
 
 using namespace std;
 
@@ -39,10 +40,20 @@ int main()
 	cout << m2.get_element(4, 4) << endl;
 	cout << m2.get_element(2, 2) << endl;
 
+	c(m2);
+	c.display();
+	c(2, 2);
+	c.display();
+
 	Matrix<double> mm1(4, 1);
 	Matrix<double> mm2(3, 1);
 	BPnet net;
 	net.set_dim(mm1, mm2);
 	net.checkparameter();
+
+	Matrix<double> m3;
+	Matrix<double> m4;
+	data_loader test;
+	//test.read_file("./data/iris.data",m3,m4);
 	return 0;
 }
