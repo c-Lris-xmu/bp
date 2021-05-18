@@ -21,8 +21,8 @@ public:
 	template<class T1>
 	friend bool judge(const Matrix<T1>&, const Matrix<T1>&);             //判断是否满足相乘
  
-
-	Matrix<T> operator!();                                              //矩阵转置
+	Matrix<T> operator!();                                               //矩阵转置
+	T get_element(int, int);                                             //读取单个元素
 	void display();
 
 private:
@@ -131,6 +131,16 @@ Matrix<T1> operator-(const Matrix<T1>&a, const Matrix<T1>&b)
 		return c;
 	}
 	return Matrix<T1>(0, 0);
+}
+template<class T>
+T Matrix<T>::get_element(int x, int y)
+{
+	if (x >= Row || y >= Col)
+	{
+		cout << "Vector index out of range" << endl;
+		return matrix[0][0];
+	}
+	return matrix[x][y];
 }
 
 template<class T>

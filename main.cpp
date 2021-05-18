@@ -30,6 +30,8 @@ int main()
 	m2.display();
 	m2 = m + c;
 	m2.display();
-
+	cout << "获取单个元素" << endl;
+	cout << m2.get_element(4, 4) << endl;
+	cout << m2.get_element(2, 2) << endl;
 	return 0;
 }
