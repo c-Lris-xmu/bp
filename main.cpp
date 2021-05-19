@@ -49,21 +49,36 @@ int main()
 	c(2, 2);
 	c.display();
 
-	Matrix<double> mm1(4, 1);
-	Matrix<double> mm2(3, 1);
+	cout << "-----bp net-----" << endl;
+	Matrix<double> mm1(4,1);
+	Matrix<double> mm2(3,1);
 	BPnet net(1000,0.01,0.01);
 	net.set_dim(mm1, mm2);
+	net.init_net();
+	cout << "---before---" << endl;
+	net.checkparameter();
+	net.forward_propagation();
+	cout << "---after---" << endl;
 	net.checkparameter();
 
-	Matrix<double> m3;
+	/*Matrix<double> m3;
 	Matrix<double> m4;
 	data_loader test;
-	test.read_file("./data/iris.data",m3,m4);
+	test.read_file("./data/iris.data",m3,m4);*/
 
-	
-	Matrix<int> m;
-	int (*ptr)(int) = add;
-	m.self_function(ptr);
+	cout << "-------myrand--------" << endl;
+	Matrix<double> mm(5,5);
+	double (*ptr)(double) = myrand;
+	mm.self_function(ptr);
+	mm.display();
+	cout << "------------" << endl;
+	cout << "operator use" << endl;
+	Matrix<double>ww1(5, 4);
+	Matrix<double>aa1(4, 1);
+	Matrix<double>bb1(5, 1);
+	Matrix<double>tmptmp(5, 1);
+	tmptmp = ww1 * aa1 + bb1;
+	tmptmp.display();
 
 	return 0;
 }
