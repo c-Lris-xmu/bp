@@ -81,6 +81,48 @@ void BPnet::improve_w_and_b() {
 	b1 = b1 - lr_b * delta1;
 }
 
+//need Matrix max function
+int BPnet::forecast(Matrix<double>& _x) {
+	a1 = x;
+	forward_propagation();
+	//need max function to find which y[i] is max
+	//return 0 1 2 mean different category
+
+	return 0;
+}
+
+double BPnet::cal_acc(Matrix<double>& X, Matrix<double>& Y) {
+	int tot = 0;
+	//generate x[] and y[]
+	Matrix<double>xx;
+	int num = 10;//X 's row
+	for (int i = 0; i < num; i++) {
+		int res = forecast(xx);
+		//if y[i][res]==1 means forecast true
+		//then tot++
+	}
+	return tot / (num * 1.0);
+}
+
+void BPnet::train(Matrix<double>& X, Matrix<double>& Y) {
+	//data loader
+	//generate x[] and y[]
+	//set_dim
+	init_net();
+	double best_acc = 0;
+	for (int iter = 0; iter < iteration_num; iter++) {
+		//for every x Matrix do
+		forward_propagation();
+		sensitivity_feedback();
+		improve_w_and_b();
+
+		double tmp = cal_acc(X, Y);
+		if (tmp > best_acc) {
+			best_acc = tmp;
+			//keep the net
+		}
+	}
+}
 
 void BPnet::checkparameter() {
 	cout << "dimensions" << endl << "input | hidden | output" << endl;
