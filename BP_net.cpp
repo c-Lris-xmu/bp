@@ -29,6 +29,7 @@ void BPnet::set_dim(Matrix<double>& _x, Matrix<double>& _y) {
 }
 
 void BPnet::init_net() {
+	srand(unsigned(time(0)));
 	double (*ptr)(double) = myrand;
 	w1(hidden_layer, input_layer);
 	w1.self_function(ptr);
@@ -52,17 +53,10 @@ void BPnet::init_net() {
 }
 
 void BPnet::forward_propagation() {
+	a1 = x;
 	double (*ptr)(double) = sigmoid;
-	Matrix<double> tmp(hidden_layer,1);
-	cout<< endl << "tmp" << endl;
-	tmp.display();
-	tmp = w1 * a1 + b1;
-	cout << endl << "tmp" << endl;
-	tmp.display();
-	tmp.self_function(ptr);
-	a2 = tmp;
-	//tmp = w2 * a2 + b2;
-	a3 = ((w2 * a2) + b2).self_function(ptr);
+	a2 = (w1 * a1 + b1).self_function(ptr);
+	a3 = (w2 * a2 + b2).self_function(ptr);
 }
 
 void BPnet::sensitivity_feedback() {
@@ -81,25 +75,38 @@ void BPnet::improve_w_and_b() {
 	b1 = b1 - lr_b * delta1;
 }
 
-//need Matrix max function
 int BPnet::forecast(Matrix<double>& _x) {
-	a1 = x;
+	x = _x;
 	forward_propagation();
-	//need max function to find which y[i] is max
-	//return 0 1 2 mean different category
-
-	return 0;
+	
+	double max_elm = y.find_max();
+	int res = -1;
+	for (int i = 0; i < 3; i++) {
+		if (y.get_element(i, 0) == max_elm) {
+			res = i;
+			break;
+		}
+	}
+	return res;	//return 0 1 2 mean different category
 }
 
 double BPnet::cal_acc(Matrix<double>& X, Matrix<double>& Y) {
+	int num = (int)X.getRowandCol().get_element(0, 0);//X 's row
 	int tot = 0;
 	//generate x[] and y[]
-	Matrix<double>xx;
-	int num = 10;//X 's row
+	//Matrix<double>* xx = new Matrix<double>[num];
+	
 	for (int i = 0; i < num; i++) {
-		int res = forecast(xx);
-		//if y[i][res]==1 means forecast true
-		//then tot++
+		int res = forecast(!X[i]);
+		if (res == -1) {
+			continue;
+		}
+		else
+		{
+			if (Y[i].get_element(1, res) == 1) {
+				tot++;
+			}
+		}
 	}
 	return tot / (num * 1.0);
 }
@@ -107,14 +114,18 @@ double BPnet::cal_acc(Matrix<double>& X, Matrix<double>& Y) {
 void BPnet::train(Matrix<double>& X, Matrix<double>& Y) {
 	//data loader
 	//generate x[] and y[]
-	//set_dim
+	set_dim(!X[0], !y[0]);
 	init_net();
 	double best_acc = 0;
+	int num = (int)X.getRowandCol().get_element(0, 0);
 	for (int iter = 0; iter < iteration_num; iter++) {
-		//for every x Matrix do
-		forward_propagation();
-		sensitivity_feedback();
-		improve_w_and_b();
+		for (int i = 0; i < num; i++) {
+			x = !X[i];
+			y = !Y[i];
+			forward_propagation();
+			sensitivity_feedback();
+			improve_w_and_b();
+		}
 
 		double tmp = cal_acc(X, Y);
 		if (tmp > best_acc) {
@@ -125,6 +136,9 @@ void BPnet::train(Matrix<double>& X, Matrix<double>& Y) {
 }
 
 void BPnet::checkparameter() {
+	cout << "---check parameter---" << endl;
+	cout << "iteration nums | lr_w | lr_b" << endl;
+	cout << iteration_num << ' ' << lr_w << ' ' << lr_b << endl;
 	cout << "dimensions" << endl << "input | hidden | output" << endl;
 	cout << input_layer << ' ' << hidden_layer << ' ' << output_layer << endl;
 	cout << "matrix check" << endl;
