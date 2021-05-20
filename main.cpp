@@ -57,7 +57,7 @@ int main()
 	cout<<c.find_max()<<endl;
 	cout<<c.find_min()<<endl;
 
-
+	/*
 	Matrix<double> m1_test;
 	Matrix<double> m2_test;
 	data_loader test;
@@ -69,6 +69,9 @@ int main()
 	cout << "---before---" << endl;
 	
 	net.train(m1_test, m2_test);
-	
+	*/
+
+	data_loader test;
+	test.read_file("./data/iris.data");
 	return 0;
 }

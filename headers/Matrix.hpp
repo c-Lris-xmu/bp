@@ -44,7 +44,7 @@ public:
 	T find_max();                                                        //返回最大值
 	T find_min();                                                        //返回最小值
 
-
+	void Normalize();                                             //按列对矩阵元素归一化
 	 
 private:
 	int Row, Col;
@@ -274,4 +274,31 @@ T Matrix<T>::find_min()
 		small_ele = *tmp < *small_ele ? tmp : small_ele;
 	}
 	return *small_ele;
+}
+
+template<class T>
+void Matrix<T>::Normalize()
+{
+	T* Mat_max = new T[Col];
+	T* Mat_min = new T[Col];
+	memset(Mat_max, -1, sizeof(T) * Col);
+	memset(Mat_min, 127, sizeof(T) * Col);
+	for (int i = 0; i < Row; i++)
+	{
+		for (int j = 0; j < Col; j++)
+		{
+			Mat_max[j] = Mat_max[j] > matrix[i][j] ? Mat_max[j] : matrix[i][j];
+			Mat_min[j] = Mat_min[j] < matrix[i][j] ? Mat_min[j] : matrix[i][j];
+		}
+	}
+
+	for (int i = 0; i < Row; i++)
+	{
+		for (int j = 0; j < Col; j++)
+		{
+			matrix[i][j] = 1.0 * (matrix[i][j] - Mat_min[j]) / (Mat_max[j] - Mat_min[j]);
+		}
+	}
+	delete[] Mat_max;
+	delete[] Mat_min;
 }

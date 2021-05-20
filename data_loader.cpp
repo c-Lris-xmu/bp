@@ -1,7 +1,9 @@
 #include "headers/data_loader.h"
 #include<fstream>
 #include<string>
-#include<ctype.h>
+#include<cctype>
+#include<algorithm>
+#include<numeric>
 
 using namespace std;
 
@@ -16,10 +18,11 @@ vector<double> data_loader::label_to_num(const string s)
 	return v;
 }
 
-void data_loader::read_file(string str,Matrix<double> &X,Matrix<double> &Y)
+void data_loader::read_file(const string s)
 {
 	
-	ifstream openfile(str);
+	ifstream openfile(s);
+	string str;
 	vector<vector<double> > all_train_data;
 	vector<vector<double> > all_ans_data;
 	while (!openfile.eof())
@@ -52,8 +55,31 @@ void data_loader::read_file(string str,Matrix<double> &X,Matrix<double> &Y)
 		}
 		all_train_data.push_back(train_tmp);
 	}
-	X(all_train_data);
-	Y(all_ans_data);
-	X.display();
-	Y.display();
+	xtrain(all_train_data);
+	xtrain.Normalize();
+	ytrain(all_ans_data);
+	ytrain.Normalize();
+	shuffle_index();
+	//xtrain.display();
+	//ytrain.display();
+}
+
+void data_loader::shuffle_index()
+{
+	int data_size = (int)xtrain.getRowandCol().get_element(0, 0);
+	vector<int> tmp(data_size);
+	vector<int> test;
+	vector<int> train;
+	iota(tmp.begin(), tmp.end(), 1);
+	random_shuffle(tmp.begin(), tmp.end());
+	for (int i = 0; i < data_size; i++)
+	{
+		if (i % 5 == 0)
+			test.push_back(tmp[i]);
+		else train.push_back(tmp[i]);
+	}
+	train_index(vector< vector<int> >(1, train));
+	test_index(vector< vector<int> >(1, test));
+	//train_index.display();
+	//test_index.display();
 }
