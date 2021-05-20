@@ -41,7 +41,7 @@ public:
 
 	//设置网络各层维数
 	void set_dim(Matrix<double>&, Matrix<double>&);
-
+	void input_x_and_y(Matrix<double>&, Matrix<double>&);
 	//网络初始化 初始化各个矩阵大小和随机化
 	void init_net();
 

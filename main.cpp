@@ -65,38 +65,10 @@ int main()
 
 	int num = (int)m1_test.getRowandCol().get_element(0, 0);
 	cout << "-----bp net test-----" << endl;
-	BPnet net(100, 0.01, 0.01);
+	BPnet net(600, 0.01, 0.01);
 	cout << "---before---" << endl;
 	
-	net.set_dim(!m1_test[0], !m2_test[0]);
-	net.init_net();
-	
-	for (int it = 0; it < 100; it++) {
-		
-		for (int i = 0; i < num; i++) {
-			Matrix<double>xx = !m1_test[i];
-			Matrix<double>yy = !m2_test[i];
-			net.set_dim(xx, yy);
-			net.forward_propagation();
-			net.sensitivity_feedback();
-			net.improve_w_and_b();
-		}
-	}
-	
-	//net.checkparameter();
-	cout << "------acc check------" << endl;
-	int res = net.forecast(!m1_test[100]);
-	cout << res << endl;
-	
-	double tmp = net.cal_acc(m1_test, m2_test);
-	cout << tmp << endl;
-	
-	/*
 	net.train(m1_test, m2_test);
-	
-	cout << "---after---" << endl;
-	net.checkparameter();
-	*/
 	
 	return 0;
 }
