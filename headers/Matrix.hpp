@@ -55,7 +55,7 @@ Matrix<T>::Matrix(int r, int c)
 template<class T>
 Matrix<T>::Matrix(const Matrix<T>& a)
 {
-	this->Row = a.Row, this->Col = a.Row;
+	this->Row = a.Row, this->Col = a.Col;
 	this->matrix.assign(Row, vector<T>(Col, 0));
 	for (int i = 0; i < Row; i++)
 		matrix[i].assign(a.matrix[i].begin(), a.matrix[i].end());
