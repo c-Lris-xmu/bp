@@ -112,3 +112,31 @@
     m.find_min();
 ```
 
+#### Normalize()将矩阵按列归一化
+
+```c++
+    m.Normalize();
+```
+
+### 
+
+### 三、data_loader接口
+
+#### read_file(string s) 通过对字符串地址s读取该文件的数据
+
+```c++
+read_file("./data/iris.data");
+```
+
+####  Matrix类成员xtrain 和 ytrain 存储数据特征和数据结果
+
+```c++
+Matrix<double> xtrain,ytrain;
+```
+
+#### Matrix类成员train_index和test_index为4:1划分的训练集和测试集索引
+
+```c++
+Matrix<int> train_index, test_index;//大小为1xN
+```
+
