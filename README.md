@@ -52,6 +52,12 @@
     m(vector<vector<int> >)  //同上
 ```
 
+#### 重载operator[],直接获取某一行,返回值将是一个1xN的Matrix
+
+```c++
+   m[i] //从第0行开始
+```
+
 #### 支持矩阵加减乘，乘包括点乘
 
 ###### 现已支持double直接左乘或右乘
@@ -99,4 +105,10 @@
     m.self_function(ptr);
 ```
 
-#### 
+#### find_max和find_min将返回矩阵的最大值和最小值
+
+```c++
+    m.find_max();
+    m.find_min();
+```
+

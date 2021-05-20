@@ -33,7 +33,7 @@ private:
 
 	//函数暂时都放在public中
 	//大体完成后再调整回来
-	
+
 public:
 	BPnet();
 	BPnet(int _iters = 1000, double _lr_w = 0.01, double _lr_b = 0.01);
@@ -41,14 +41,14 @@ public:
 
 	//设置网络各层维数
 	void set_dim(Matrix<double>&, Matrix<double>&);
-	
+
 	//网络初始化 初始化各个矩阵大小和随机化
 	void init_net();
-	
+
 	void forward_propagation();	//前向传播
 	void sensitivity_feedback();//误差计算和敏感度回传
 	void improve_w_and_b();		//参数修正
-	
+
 	int forecast(Matrix<double>&);			//模型预测 传入训练矩阵
 	double cal_acc(Matrix<double>&, Matrix<double>&);//计算准确率 传入验证矩阵
 	void train(Matrix<double>&, Matrix<double>&); //训练

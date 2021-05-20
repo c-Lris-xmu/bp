@@ -80,5 +80,11 @@ int main()
 	tmptmp = ww1 * aa1 + bb1;
 	tmptmp.display();
 
+	c = m * m2;
+	c.display();
+	c[1].display();
+	cout<<c.find_max()<<endl;
+	cout<<c.find_min()<<endl;
+
 	return 0;
 }

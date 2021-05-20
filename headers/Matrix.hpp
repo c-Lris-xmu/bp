@@ -1,6 +1,7 @@
 #pragma once
 #include<vector>
 #include<iostream>
+#include<algorithm>
 
 using namespace std;
 
@@ -30,6 +31,7 @@ public:
 	Matrix<T> operator()(int,int);                                       //拷贝复制
 	Matrix<T> operator()(const Matrix&m);
 	Matrix<T> operator()(vector< vector<T> >&);
+	Matrix<T> operator[](int);                                           //读取某一行
 
 	T get_element(int, int);                                             //读取单个元素
 
@@ -38,6 +40,11 @@ public:
 	Matrix<T> self_function(T(*f)(T a));                                 //自定义函数操作矩阵值
 
 	Matrix<T> getRowandCol();                                            //返回行列
+
+	T find_max();                                                        //返回最大值
+	T find_min();                                                        //返回最小值
+
+
 	 
 private:
 	int Row, Col;
@@ -87,6 +94,17 @@ Matrix<T> Matrix<T>::operator !()
 			temp.matrix[j][i] = matrix[i][j];
 
 	return temp;
+}
+
+template<class T>
+Matrix<T> Matrix<T>::operator[](int i)
+{
+	if (i >= Row)
+	{
+		cout<<"Vector index out of range" << endl;
+		return Matrix<T>(1, 0);
+	}
+	return Matrix<T>(vector< vector<T> >(1, matrix[i]));
 }
 
 template<class T>
@@ -232,4 +250,28 @@ Matrix<T> Matrix<T>::getRowandCol()
 	temp.matrix[0][0] = this->Row;
 	temp.matrix[0][1] = this->Col;
 	return temp;
+}
+
+template<class T>
+T Matrix<T>::find_max()
+{
+	vector<T>::iterator big_ele = max_element(matrix[0].begin(), matrix[0].end());
+	for (int i = 1; i < Row; i++)
+	{
+		vector<T>::iterator tmp = max_element(matrix[i].begin(), matrix[i].end());
+		big_ele = *tmp > *big_ele ? tmp : big_ele;
+	}
+	return *big_ele;
+}
+
+template<class T>
+T Matrix<T>::find_min()
+{
+	vector<T>::iterator small_ele = min_element(matrix[0].begin(), matrix[0].end());
+	for (int i = 1; i < Row; i++)
+	{
+		vector<T>::iterator tmp = min_element(matrix[i].begin(), matrix[i].end());
+		small_ele = *tmp < *small_ele ? tmp : small_ele;
+	}
+	return *small_ele;
 }
