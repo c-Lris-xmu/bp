@@ -103,7 +103,7 @@ double BPnet::cal_acc(Matrix<double>& X, Matrix<double>& Y) {
 		}
 		else
 		{
-			if (Y[i].get_element(1, res) == 1) {
+			if (Y[i].get_element(0, res) == 1) {
 				tot++;
 			}
 		}
