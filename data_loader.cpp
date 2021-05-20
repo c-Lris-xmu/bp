@@ -70,7 +70,7 @@ void data_loader::shuffle_index()
 	vector<int> tmp(data_size);
 	vector<int> test;
 	vector<int> train;
-	iota(tmp.begin(), tmp.end(), 1);
+	iota(tmp.begin(), tmp.end(), 0);
 	random_shuffle(tmp.begin(), tmp.end());
 	for (int i = 0; i < data_size; i++)
 	{
