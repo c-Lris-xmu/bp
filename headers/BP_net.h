@@ -1,5 +1,6 @@
 #pragma once
 
+#include "headers/data_loader.h"
 #include "headers/Matrix.hpp"
 
 using namespace std;
@@ -52,6 +53,7 @@ public:
 	int forecast(Matrix<double>&);			//模型预测 传入训练矩阵
 	double cal_acc(Matrix<double>&, Matrix<double>&);//计算准确率 传入验证矩阵
 	void train(Matrix<double>&, Matrix<double>&); //训练
+	void train(data_loader&); //训练
 	//检查参数函数 调试用
 	void checkparameter();
 };

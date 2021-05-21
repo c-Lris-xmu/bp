@@ -73,5 +73,7 @@ int main()
 
 	data_loader test;
 	test.read_file("./data/iris.data");
+	BPnet net(600, 0.01, 0.01);
+	net.train(test);
 	return 0;
 }

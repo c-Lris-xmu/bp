@@ -1,4 +1,5 @@
 #include "headers/BP_net.h"
+#include "headers/data_loader.h"
 #include "headers/Matrix.hpp"
 
 BPnet::BPnet()
@@ -131,6 +132,30 @@ void BPnet::train(Matrix<double>& X, Matrix<double>& Y) {
 		}
 
 		double tmp = cal_acc(X, Y);
+		if (tmp > best_acc) {
+			best_acc = tmp;
+			//keep the net
+		}
+		cout << "Iteration: " << iter << " acc:" << tmp << endl;
+	}
+}
+
+void BPnet::train(data_loader& data) {
+	set_dim(!data.xtrain[0], !data.ytrain[0]);
+	init_net();
+	double best_acc = 0;
+	int num = data.train_index.getRowandCol().get_element(0, 1);
+
+	for (int iter = 0; iter < iteration_num; iter++) {
+		for (int i = 0; i < num; i++) {
+			int id = data.train_index.get_element(0, i);
+			input_x_and_y(!data.xtrain[id], !data.ytrain[id]);
+			forward_propagation();
+			sensitivity_feedback();
+			improve_w_and_b();
+		}
+
+		double tmp = cal_acc(data.xtrain, data.ytrain);
 		if (tmp > best_acc) {
 			best_acc = tmp;
 			//keep the net
