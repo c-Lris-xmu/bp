@@ -59,23 +59,15 @@ int main()
 
 	data_loader test;
 	test.read_file("./data/iris.data");
-	BPnet net(100, 0.01, 0.01);
+	BPnet net(45, 0.01, 0.01);
 	net.train(test);
 	cout << "----------" << endl;
-	test.xtrain[12].display();
-	test.ytrain[12].display();
-	cout << net.forecast(!test.xtrain[12]) << endl;
+	test.shuffle_index();
+	int id = test.test_index.get_element(0, 12);
+	cout << "id: " << id << endl;
+	test.xtrain[id].display();
+	test.ytrain[id].display();
+	cout << net.forecast(!test.xtrain[id]) << endl;
 
-
-
-	cout << "----------" << endl;
-	test.xtrain[128].display();
-	test.ytrain[128].display();
-	cout << net.forecast(!test.xtrain[128]) << endl;
-
-	cout << "----------" << endl;
-	test.xtrain[92].display();
-	test.ytrain[92].display();
-	cout << net.forecast(!test.xtrain[92]) << endl;
 	return 0;
 }

@@ -121,14 +121,14 @@ double BPnet::cal_acc(data_loader& data) {
 	int tot = 0;
 	for (int i = 0; i < num; i++) {
 		int id = data.test_index.get_element(0, i);
-		int res = forecast(!data.xtrain[i]);
+		int res = forecast(!data.xtrain[id]);
 		if (res == -1) {
 			cout << "Forecast Error!" << endl;
 			continue;
 		}
 		else
 		{
-			if (data.ytrain[i].get_element(0, res) == 1) {
+			if (data.ytrain[id].get_element(0, res) == 1) {
 				tot++;
 			}
 		}
