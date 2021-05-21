@@ -38,24 +38,24 @@
 #### 初始化支持三种形式，接下来视情况扩展int** 
 
 ```c++
-	Matrix(int, int);                                                    
-	Matrix(const Matrix<T>&);                                            
-	Matrix(vector< vector<T> >&);                                        
+Matrix(int, int);                                                    
+Matrix(const Matrix<T>&);                                            
+Matrix(vector< vector<T> >&);                                        
 ```
 
 #### 重载operator()，非初始化阶段也能矩阵赋值
 
 ```c++
-    Matrix<T> m;
-    m(2,2) //2x2初值为0
-    m(m2)  //与m2相同
-    m(vector<vector<int> >)  //同上
+Matrix<T> m;
+m(2,2) //2x2初值为0
+m(m2)  //与m2相同
+m(vector<vector<int> >)  //同上
 ```
 
 #### 重载operator[],直接获取某一行,返回值将是一个1xN的Matrix
 
 ```c++
-   m[i] //从第0行开始
+m[i] //从第0行开始
 ```
 
 #### 支持矩阵加减乘，乘包括点乘
@@ -63,62 +63,68 @@
 ###### 现已支持double直接左乘或右乘
 
 ```c++
-    Matrix<int>c = m * m2;
-	m2 = m - c;
-	m2 = m + c;
-    m2 = 1.0*m;
+Matrix<int>c = m * m2;
+m2 = m - c;
+m2 = m + c;
+m2 = 1.0*m;
 ```
 
 #### 重载 operator ！实现自身转置以及赋值给其他类
 
 ```c++
-	m=!c;
+m=!c;
 ```
 
 #### display()函数打印矩阵
 
 ```
-    m.display();
+m.display();
 ```
 
 #### get_element(int,int) 返回单个元素 超出范围返回矩阵第一个值
 
 ```c++
-    m.get_element(2,2); //index starts from zero
+m.get_element(2,2); //index starts from zero
 ```
 
 #### getRowandCol() 返回一个1*2的Matrix 第一个元素为行，第二个元素为列
 
 ```c++
-    m.getRowandCol();
+m.getRowandCol();
 ```
 
 #### self_function(T(*f)(T a)) 传入函数句柄对所有矩阵元素进行操作
 
 ```c++
-    int add(int a)
-    {
-       return a+1;
-    }
-    Matrix<int> m;
-    int (*ptr)(int)=add;
-    m.self_function(ptr);
+int add(int a)
+{
+	return a+1;
+}
+Matrix<int> m;
+int (*ptr)(int)=add;
+m.self_function(ptr);
 ```
 
 #### find_max和find_min将返回矩阵的最大值和最小值
 
 ```c++
-    m.find_max();
-    m.find_min();
+m.find_max();
+m.find_min();
 ```
 
 #### Normalize()将矩阵按列归一化
 
 ```c++
-    m.Normalize();
+m.Normalize();
 ```
 
-### 
+#### shuffle()将矩阵按行乱序
+
+```c++
+m.shuffle()  //若要对列乱序，务必转置
+```
+
+
 
 ### 三、data_loader接口
 
@@ -140,3 +146,4 @@ Matrix<double> xtrain,ytrain;
 Matrix<int> train_index, test_index;//大小为1xN
 ```
 
+#### 

@@ -44,8 +44,9 @@ public:
 	T find_max();                                                        //返回最大值
 	T find_min();                                                        //返回最小值
 
-	void Normalize();                                             //按列对矩阵元素归一化
-	 
+	void Normalize();                                                    //按列对矩阵元素归一化
+	void shuffle();                                                      //矩阵按行乱序
+
 private:
 	int Row, Col;
 	vector< vector<T> > matrix;
@@ -301,4 +302,11 @@ void Matrix<T>::Normalize()
 	}
 	delete[] Mat_max;
 	delete[] Mat_min;
+}
+
+template<class T>
+void Matrix<T>::shuffle()
+{
+	for (int i = 0; i < Row; i++)
+		random_shuffle(matrix[i].begin(), matrix[i].end());
 }
