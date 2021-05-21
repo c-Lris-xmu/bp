@@ -95,7 +95,7 @@ int BPnet::forecast(Matrix<double>& _x) {
 	}
 	return res;	//return 0 1 2 mean different category
 }
-
+/*
 double BPnet::cal_acc(Matrix<double>& X, Matrix<double>& Y) {
 	int num = (int)X.getRowandCol().get_element(0, 0);//X 's row
 	int tot = 0;
@@ -103,6 +103,7 @@ double BPnet::cal_acc(Matrix<double>& X, Matrix<double>& Y) {
 	for (int i = 0; i < num; i++) {
 		int res = forecast(!X[i]);
 		if (res == -1) {
+			cout << "Forecast Error!" << endl;
 			continue;
 		}
 		else
@@ -114,7 +115,27 @@ double BPnet::cal_acc(Matrix<double>& X, Matrix<double>& Y) {
 	}
 	return tot / (num * 1.0);
 }
-
+*/
+double BPnet::cal_acc(data_loader& data) {
+	int num = data.test_index.getRowandCol().get_element(0, 1);
+	int tot = 0;
+	for (int i = 0; i < num; i++) {
+		int id = data.test_index.get_element(0, i);
+		int res = forecast(!data.xtrain[i]);
+		if (res == -1) {
+			cout << "Forecast Error!" << endl;
+			continue;
+		}
+		else
+		{
+			if (data.ytrain[i].get_element(0, res) == 1) {
+				tot++;
+			}
+		}
+	}
+	return tot / (num * 1.0);
+}
+/*
 void BPnet::train(Matrix<double>& X, Matrix<double>& Y) {
 	//data loader
 	//generate x[] and y[]
@@ -139,7 +160,7 @@ void BPnet::train(Matrix<double>& X, Matrix<double>& Y) {
 		cout << "Iteration: " << iter << " acc:" << tmp << endl;
 	}
 }
-
+*/
 void BPnet::train(data_loader& data) {
 	set_dim(!data.xtrain[0], !data.ytrain[0]);
 	init_net();
@@ -155,7 +176,9 @@ void BPnet::train(data_loader& data) {
 			improve_w_and_b();
 		}
 
-		double tmp = cal_acc(data.xtrain, data.ytrain);
+		//double tmp = cal_acc(data.xtrain, data.ytrain);
+		double tmp = cal_acc(data);
+
 		if (tmp > best_acc) {
 			best_acc = tmp;
 			//keep the net

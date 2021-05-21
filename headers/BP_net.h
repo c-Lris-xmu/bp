@@ -51,8 +51,9 @@ public:
 	void improve_w_and_b();		//参数修正
 
 	int forecast(Matrix<double>&);			//模型预测 传入训练矩阵
-	double cal_acc(Matrix<double>&, Matrix<double>&);//计算准确率 传入验证矩阵
-	void train(Matrix<double>&, Matrix<double>&); //训练
+	//double cal_acc(Matrix<double>&, Matrix<double>&);//计算准确率 传入验证矩阵
+	double cal_acc(data_loader&);//计算准确率 传入验证矩阵
+	//void train(Matrix<double>&, Matrix<double>&); //训练
 	void train(data_loader&); //训练
 	//检查参数函数 调试用
 	void checkparameter();
