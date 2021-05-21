@@ -57,4 +57,6 @@ public:
 	void train(data_loader&); //训练
 	//检查参数函数 调试用
 	void checkparameter();
+	void model_save(const string);
+
 };

@@ -1,6 +1,9 @@
 #include "headers/BP_net.h"
 #include "headers/data_loader.h"
 #include "headers/Matrix.hpp"
+#include<fstream>
+
+using namespace std;
 
 BPnet::BPnet()
 {
@@ -185,6 +188,7 @@ void BPnet::train(data_loader& data) {
 		}
 		cout << "Iteration: " << iter << " acc:" << tmp << endl;
 	}
+	model_save("./data/train_model.pdparams");
 }
 
 void BPnet::checkparameter() {
@@ -219,6 +223,22 @@ void BPnet::checkparameter() {
 	delta1.display();
 	cout << "delta2" << endl;
 	delta2.display();
+}
+
+void BPnet::model_save(const string s)
+{
+	ofstream savefile(s);
+	savefile.clear();
+	streambuf* strmout_buf = cout.rdbuf();
+	cout.rdbuf(savefile.rdbuf());
+	savefile << "w1" << endl;
+	w1.display();
+	savefile << "w2" << endl;
+	w2.display();
+	savefile << "b1" << endl;
+	b1.display();
+	savefile << "b2" << endl;
+	b2.display();
 }
 
 double sigmoid(double x) {
