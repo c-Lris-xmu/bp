@@ -219,6 +219,8 @@ void BPnet::model_save(const string s)
 	b1.display();
 	savefile << "b2" << endl;
 	b2.display();
+	cout.rdbuf(strmout_buf);
+	savefile.close();
 }
 
 double sigmoid(double x) {

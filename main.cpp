@@ -27,5 +27,6 @@ int main()
 	test.ytrain[id].display();
 	cout << net.forecast(!test.xtrain[id]) << endl;
 	*/
+	system("pause");
 	return 0;
 }
