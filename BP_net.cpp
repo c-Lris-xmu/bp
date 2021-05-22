@@ -98,72 +98,50 @@ int BPnet::forecast(Matrix<double>& _x) {
 	}
 	return res;	//return 0 1 2 mean different category
 }
-/*
-double BPnet::cal_acc(Matrix<double>& X, Matrix<double>& Y) {
-	int num = (int)X.getRowandCol().get_element(0, 0);//X 's row
-	int tot = 0;
-	
-	for (int i = 0; i < num; i++) {
-		int res = forecast(!X[i]);
-		if (res == -1) {
-			cout << "Forecast Error!" << endl;
-			continue;
-		}
-		else
-		{
-			if (Y[i].get_element(0, res) == 1) {
-				tot++;
-			}
-		}
-	}
-	return tot / (num * 1.0);
-}
-*/
-double BPnet::cal_acc(data_loader& data) {
-	int num = data.test_index.getRowandCol().get_element(0, 1);
-	int tot = 0;
-	for (int i = 0; i < num; i++) {
-		int id = data.test_index.get_element(0, i);
-		int res = forecast(!data.xtrain[id]);
-		if (res == -1) {
-			cout << "Forecast Error!" << endl;
-			continue;
-		}
-		else
-		{
-			if (data.ytrain[id].get_element(0, res) == 1) {
-				tot++;
-			}
-		}
-	}
-	return tot / (num * 1.0);
-}
-/*
-void BPnet::train(Matrix<double>& X, Matrix<double>& Y) {
-	//data loader
-	//generate x[] and y[]
-	set_dim(!X[0], !Y[0]);
-	init_net();
-	double best_acc = 0;
-	int num = (int)X.getRowandCol().get_element(0, 0);
-	
-	for (int iter = 0; iter < iteration_num; iter++) {
-		for (int i = 0; i < num; i++) {
-			input_x_and_y(!X[i], !Y[i]);
-			forward_propagation();
-			sensitivity_feedback();
-			improve_w_and_b();
-		}
 
-		double tmp = cal_acc(X, Y);
-		if (tmp > best_acc) {
-			best_acc = tmp;
-			//keep the net
+double BPnet::cal_acc(data_loader& data,int flag) {
+	//flag==0表示在训练集上计算准确度
+	//flag==1表示在测试集上计算准确度
+	int num;
+	int tot = 0;
+	if (flag == 0) {
+		num = data.train_index.getRowandCol().get_element(0, 1);
+		for (int i = 0; i < num; i++) {
+			int id = data.train_index.get_element(0, i);
+			int res = forecast(!data.xtrain[id]);
+			if (res == -1) {
+				cout << "Forecast Error!" << endl;
+				continue;
+			}
+			else
+			{
+				if (data.ytrain[id].get_element(0, res) == 1) {
+					tot++;
+				}
+			}
 		}
-		cout << "Iteration: " << iter << " acc:" << tmp << endl;
 	}
+	else
+	{
+		num = data.test_index.getRowandCol().get_element(0, 1);
+		for (int i = 0; i < num; i++) {
+			int id = data.test_index.get_element(0, i);
+			int res = forecast(!data.xtrain[id]);
+			if (res == -1) {
+				cout << "Forecast Error!" << endl;
+				continue;
+			}
+			else
+			{
+				if (data.ytrain[id].get_element(0, res) == 1) {
+					tot++;
+				}
+			}
+		}
+	}
+	return tot / (num * 1.0);
 }
-*/
+
 void BPnet::train(data_loader& data) {
 	set_dim(!data.xtrain[0], !data.ytrain[0]);
 	init_net();
@@ -179,8 +157,7 @@ void BPnet::train(data_loader& data) {
 			improve_w_and_b();
 		}
 
-		//double tmp = cal_acc(data.xtrain, data.ytrain);
-		double tmp = cal_acc(data);
+		double tmp = cal_acc(data, 0);
 
 		if (tmp > best_acc) {
 			best_acc = tmp;
@@ -188,7 +165,10 @@ void BPnet::train(data_loader& data) {
 		}
 		cout << "Iteration: " << iter << " acc:" << tmp << endl;
 	}
+	cout << "acc on test: " << cal_acc(data, 1) << endl;
 	model_save("./data/train_model.pdparams");
+
+	return;
 }
 
 void BPnet::checkparameter() {

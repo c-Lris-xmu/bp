@@ -13,12 +13,12 @@ int add(int a)
 }
 int main()
 {
-
+	cout << "-----START-----" << endl;
 	data_loader test;
 	test.read_file("./data/iris.data");
-	BPnet net(45, 0.01, 0.01);
+	BPnet net(50, 0.01, 0.01);
 	net.train(test);
-	cout << "----------" << endl;
+	cout << "-----END-----" << endl;
 	test.shuffle_index();
 	/*
 	int id = test.test_index.get_element(0, 12);

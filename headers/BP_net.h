@@ -42,21 +42,20 @@ public:
 
 	//设置网络各层维数
 	void set_dim(Matrix<double>&, Matrix<double>&);
+	//传入输入矩阵和输出矩阵
 	void input_x_and_y(Matrix<double>&, Matrix<double>&);
 	//网络初始化 初始化各个矩阵大小和随机化
 	void init_net();
 
-	void forward_propagation();	//前向传播
-	void sensitivity_feedback();//误差计算和敏感度回传
-	void improve_w_and_b();		//参数修正
+	void forward_propagation();			//前向传播
+	void sensitivity_feedback();		//误差计算和敏感度回传
+	void improve_w_and_b();				//参数修正
 
-	int forecast(Matrix<double>&);			//模型预测 传入训练矩阵
-	//double cal_acc(Matrix<double>&, Matrix<double>&);//计算准确率 传入验证矩阵
-	double cal_acc(data_loader&);//计算准确率 传入验证矩阵
-	//void train(Matrix<double>&, Matrix<double>&); //训练
-	void train(data_loader&); //训练
-	//检查参数函数 调试用
-	void checkparameter();
-	void model_save(const string);
+	int forecast(Matrix<double>&);		//模型预测 传入训练矩阵
+	double cal_acc(data_loader&,int);	//计算准确率 传入验证矩阵
+	void train(data_loader&);			//训练
+	
+	void checkparameter();				//检查参数函数 调试用
+	void model_save(const string);		//保存模型
 
 };
