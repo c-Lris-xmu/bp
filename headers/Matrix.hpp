@@ -39,7 +39,7 @@ public:
 
 	Matrix<T> self_function(T(*f)(T a));                                 //自定义函数操作矩阵值
 
-	Matrix<T> getRowandCol();                                            //返回行列
+	Matrix<int> getRowandCol();                                            //返回行列
 
 	T find_max();                                                        //返回最大值
 	T find_min();                                                        //返回最小值
@@ -245,11 +245,12 @@ Matrix<T> Matrix<T>::self_function(T  (*f)(T a))
 }
 
 template<class T>
-Matrix<T> Matrix<T>::getRowandCol()
+Matrix<int> Matrix<T>::getRowandCol()
 {
-	Matrix<T> temp(1, 2);
-	temp.matrix[0][0] = this->Row;
-	temp.matrix[0][1] = this->Col;
+	vector<int> v;
+	v.push_back(this->Row);
+	v.push_back(this->Col);
+	Matrix<int> temp(vector<vector<int>>(1,v));
 	return temp;
 }
 

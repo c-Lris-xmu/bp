@@ -27,8 +27,8 @@ BPnet::~BPnet() {
 void BPnet::set_dim(Matrix<double>& _x, Matrix<double>& _y) {
 	this->x = _x;
 	this->y = _y;
-	input_layer = (int)x.getRowandCol().get_element(0, 0);
-	output_layer = (int)y.getRowandCol().get_element(0, 0);
+	input_layer = x.getRowandCol().get_element(0, 0);
+	output_layer = y.getRowandCol().get_element(0, 0);
 	hidden_layer = 5;
 }
 
@@ -161,7 +161,7 @@ void BPnet::train(data_loader& data) {
 
 		if (tmp > best_acc) {
 			best_acc = tmp;
-			//keep the net
+			model_save("./data/best_train_model.pdparams");
 		}
 		cout << "Iteration: " << iter << " acc:" << tmp << endl;
 	}
