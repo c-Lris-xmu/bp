@@ -161,7 +161,9 @@ void BPnet::train(data_loader& data) {
 
 		if (tmp > best_acc) {
 			best_acc = tmp;
-			model_save("./data/best_train_model.pdparams");
+			if (best_acc >= 0.97) {
+				model_save("./data/best_train_model.pdparams");
+			}
 		}
 		cout << "Iteration: " << iter << " acc:" << tmp << endl;
 	}

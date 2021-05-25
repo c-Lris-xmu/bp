@@ -10,10 +10,10 @@ using namespace std;
 int main()
 {
 	cout << "-----START-----" << endl;
-	data_loader test;
-	test.read_file("./data/iris.data");
+	data_loader data;
+	data.read_file("./data/iris.data");
 	BPnet net(50, 0.01, 0.01);
-	net.train(test);
+	net.train(data);
 	cout << "-----END-----" << endl;
 	
 	system("pause");

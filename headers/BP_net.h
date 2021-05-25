@@ -32,14 +32,6 @@ private:
 	Matrix<double> delta1;	//前一层敏感度 5*1
 	Matrix<double> delta2;	//结果和y的偏差导出的敏感度 3*1
 
-	//函数暂时都放在public中
-	//大体完成后再调整回来
-
-public:
-	BPnet();
-	BPnet(int _iters = 1000, double _lr_w = 0.01, double _lr_b = 0.01);
-	~BPnet();
-
 	//设置网络各层维数
 	void set_dim(Matrix<double>&, Matrix<double>&);
 	//传入输入矩阵和输出矩阵
@@ -47,15 +39,29 @@ public:
 	//网络初始化 初始化各个矩阵大小和随机化
 	void init_net();
 
-	void forward_propagation();			//前向传播
-	void sensitivity_feedback();		//误差计算和敏感度回传
-	void improve_w_and_b();				//参数修正
+	//前向传播
+	void forward_propagation();
+	//误差计算和敏感度回传
+	void sensitivity_feedback();	
+	//参数修正
+	void improve_w_and_b();				
 
-	int forecast(Matrix<double>&);		//模型预测 传入训练矩阵
-	double cal_acc(data_loader&,int);	//计算准确率 传入验证矩阵
-	void train(data_loader&);			//训练
+	//模型预测 传入输入矩阵 返回类别代号
+	int forecast(Matrix<double>&);	
+	//计算准确率 传入验证数据data和评判选择flag 返回准确率
+	double cal_acc(data_loader&, int);	
+
+	//保存模型
+	void model_save(const string);		
+
+public:
+	BPnet();
+	BPnet(int _iters = 1000, double _lr_w = 0.01, double _lr_b = 0.01);
+	~BPnet();
+
+	//训练
+	void train(data_loader&);			
 	
-	void checkparameter();				//检查参数函数 调试用
-	void model_save(const string);		//保存模型
-
+	//检查参数函数 调试用
+	void checkparameter();
 };

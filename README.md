@@ -148,3 +148,16 @@ Matrix<int> train_index, test_index;//大小为1xN
 
 
 
+### 四、BPnet接口
+
+#### 构造函数设置网络训练次数以及w和b的各自学习率
+
+```c++
+BPnet net(50, 0.01, 0.01);//训练50次 w和b的学习率都设置为0.01
+```
+
+#### 网络训练 传入类型为data_loader的数据data
+
+```c++
+net.train(data);
+```
