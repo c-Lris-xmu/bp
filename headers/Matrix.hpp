@@ -39,7 +39,7 @@ public:
 
 	Matrix<T> self_function(T(*f)(T a));                                 //自定义函数操作矩阵值
 
-	Matrix<int> getRowandCol();                                            //返回行列
+	Matrix<int> getRowandCol();                                          //返回行列
 
 	T find_max();                                                        //返回最大值
 	T find_min();                                                        //返回最小值
