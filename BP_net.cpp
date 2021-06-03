@@ -2,6 +2,8 @@
 #include "headers/data_loader.h"
 #include "headers/Matrix.hpp"
 #include<fstream>
+#include<ctime>
+#include<Python.h>
 
 using namespace std;
 
@@ -10,13 +12,13 @@ BPnet::BPnet()
 	iteration_num = 1000;
 	lr_w = lr_b = 0.01;
 	input_layer = 0;
-	hidden_layer = 0;
+	//hidden_layer = 0;
 	output_layer = 0;
 }
 
-BPnet::BPnet(int _iters, double _lr_w, double _lr_b):iteration_num(_iters),lr_w(_lr_w),lr_b(_lr_b){
+BPnet::BPnet(int _iters, double _lr_w, double _lr_b,int cell_num):iteration_num(_iters),lr_w(_lr_w),lr_b(_lr_b),hidden_layer(cell_num){
 	input_layer = 0;
-	hidden_layer = 0;
+	//hidden_layer = 0;
 	output_layer = 0;
 }
 
@@ -29,7 +31,7 @@ void BPnet::set_dim(Matrix<double>& _x, Matrix<double>& _y) {
 	this->y = _y;
 	input_layer = x.getRowandCol().get_element(0, 0);
 	output_layer = y.getRowandCol().get_element(0, 0);
-	hidden_layer = 5;
+	//hidden_layer = 5;
 }
 
 void BPnet::input_x_and_y(Matrix<double>& _x, Matrix<double>& _y) {
@@ -59,6 +61,9 @@ void BPnet::init_net() {
 	//delta1.self_function(ptr);
 	delta2(output_layer, 1);
 	//delta2.self_function(ptr);
+
+	loss = new double[iteration_num];
+	acc = new double[iteration_num];
 }
 
 void BPnet::forward_propagation() {
@@ -102,7 +107,7 @@ int BPnet::forecast(Matrix<double>& _x) {
 double BPnet::cal_acc(data_loader& data,int flag) {
 	//flag==0表示在训练集上计算准确度
 	//flag==1表示在测试集上计算准确度
-	int num;
+	int num;//样本数
 	int tot = 0;
 	if (flag == 0) {
 		num = data.train_index.getRowandCol().get_element(0, 1);
@@ -141,23 +146,33 @@ double BPnet::cal_acc(data_loader& data,int flag) {
 	}
 	return tot / (num * 1.0);
 }
+double BPnet::cal_loss()
+{
+	Matrix<double>a;
+	a = 0.5 * !(a3 - y) * (a3 - y);
+	return a.get_element(0, 0);
+}
+
 
 void BPnet::train(data_loader& data) {
 	set_dim(!data.xtrain[0], !data.ytrain[0]);
 	init_net();
 	double best_acc = 0;
 	int num = data.train_index.getRowandCol().get_element(0, 1);
-
 	for (int iter = 0; iter < iteration_num; iter++) {
+		double tmp_loss = 0;
 		for (int i = 0; i < num; i++) {
 			int id = data.train_index.get_element(0, i);
 			input_x_and_y(!data.xtrain[id], !data.ytrain[id]);
 			forward_propagation();
 			sensitivity_feedback();
 			improve_w_and_b();
+			tmp_loss+=cal_loss();
 		}
-
+		//训练完一轮后
+		loss[iter] = tmp_loss/num;
 		double tmp = cal_acc(data, 0);
+		acc[iter] = tmp;
 
 		if (tmp > best_acc) {
 			best_acc = tmp;
@@ -169,7 +184,7 @@ void BPnet::train(data_loader& data) {
 	}
 	cout << "acc on test: " << cal_acc(data, 1) << endl;
 	model_save("./data/train_model.pdparams");
-
+	
 	return;
 }
 
