@@ -1,9 +1,0 @@
-PPT start
-
-分工 创新点
-matrix&data_loader
-bpnet
-graph
-git branch
-
-thanks
